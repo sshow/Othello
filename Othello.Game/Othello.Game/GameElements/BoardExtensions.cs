@@ -76,6 +76,9 @@ namespace Othello.Game.GameElements
             }
         }*/
 
+        /// <summary>
+        /// Returns all filled pieces in specified direction in relation to the speicified piece
+        /// </summary>
         public static IEnumerable<Piece> GetPiecesInDirection(this Board board, Piece piece, Direction dir)
         {
             IEnumerable<Piece> pieces;
@@ -109,6 +112,7 @@ namespace Othello.Game.GameElements
                     return Enumerable.Empty<Piece>();
             }
 
+            // Return only the fields which are not blank
             return pieces.Where(p => p.State != PieceState.Open);
         }
     }

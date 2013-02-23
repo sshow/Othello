@@ -41,9 +41,42 @@ namespace Othello.Game
             //west = board.GetPiecesInDirection(new Piece(6, 0), Direction.North);
             //west = board.GetPiecesInDirection(new Piece(6, 0), Direction.East);
 
-            board.PrintBoardState();
+            var playerToMove = PieceState.White;
 
-            Console.ReadKey();
+            while (true)
+            {
+                board.PrintBoardState();
+
+                Console.WriteLine();
+                Console.WriteLine("{0}'s turn...", playerToMove);
+                Console.WriteLine("Place a piece at:");
+                Console.Write("X: ");
+                var x = Console.ReadKey();
+                Console.Write(" Y: ");
+                var y = Console.ReadKey();
+
+                try
+                {
+                    board.SetPiece(
+                        Int32.Parse(x.KeyChar.ToString()),
+                        Int32.Parse(y.KeyChar.ToString()),
+                        playerToMove
+                    );
+
+                    // Switch player
+                    playerToMove = playerToMove == PieceState.White ? PieceState.Black : PieceState.White;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine();
+                    Console.WriteLine("Press any key to try again");
+                    Console.ReadKey(true);
+                }
+            }
+            
+
+
         }
     }
 #endif
