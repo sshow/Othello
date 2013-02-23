@@ -78,31 +78,38 @@ namespace Othello.Game.GameElements
 
         public static IEnumerable<Piece> GetPiecesInDirection(this Board board, Piece piece, Direction dir)
         {
+            IEnumerable<Piece> pieces;
             switch (dir)
             {
                 case Direction.North:
-                    return board.Pieces.Where(p =>
-                        p.X == piece.X &&
-                        p.Y < piece.Y
-                    );
-                case Direction.East:
-                    return board.Pieces.Where(p =>
-                        p.X > piece.X &&
-                        p.Y == piece.Y
-                    );
-                case Direction.South:
-                    return board.Pieces.Where(p =>
+                    pieces = board.Pieces.Where(p =>
                         p.X == piece.X &&
                         p.Y > piece.Y
                     );
+                    break;
+                case Direction.East:
+                    pieces = board.Pieces.Where(p =>
+                        p.X > piece.X &&
+                        p.Y == piece.Y
+                    );
+                    break;
+                case Direction.South:
+                    pieces = board.Pieces.Where(p =>
+                        p.X == piece.X &&
+                        p.Y < piece.Y
+                    );
+                    break;
                 case Direction.West:
-                    return board.Pieces.Where(p =>
+                    pieces = board.Pieces.Where(p =>
                         p.X < piece.X &&
                         p.Y == piece.Y
                     );
+                    break;
                 default:
                     return Enumerable.Empty<Piece>();
             }
+
+            return pieces.Where(p => p.State != PieceState.Open);
         }
     }
 }

@@ -36,7 +36,10 @@ namespace Othello.Game
             //    new Piece(6, 0)
             //);
 
-            board.GetPiecesInDirection(new Piece(6, 0), Direction.West);
+            
+            var west = board.GetPiecesInDirection(new Piece(6, 0), Direction.West);
+            //west = board.GetPiecesInDirection(new Piece(6, 0), Direction.North);
+            //west = board.GetPiecesInDirection(new Piece(6, 0), Direction.East);
 
             board.PrintBoardState();
 
