@@ -22,10 +22,6 @@ namespace Othello.Game
 
             var board = new Board(10, 10);
 
-            board.SetPiece(3, 0, PieceState.Black);
-            board.SetPiece(4, 0, PieceState.Black);
-            board.SetPiece(5, 0, PieceState.Black);
-
             //var between = board.Pieces.GetPiecesBetweenX(
             //    new Piece(2, 0),
             //    new Piece(9, 0)
@@ -37,7 +33,7 @@ namespace Othello.Game
             //);
 
             
-            var west = board.GetPiecesInDirection(new Piece(6, 0), Direction.West);
+            //var west = board.GetPiecesInDirection(new Piece(6, 0), Direction.West);
             //west = board.GetPiecesInDirection(new Piece(6, 0), Direction.North);
             //west = board.GetPiecesInDirection(new Piece(6, 0), Direction.East);
 
@@ -58,8 +54,8 @@ namespace Othello.Game
                 try
                 {
                     board.SetPiece(
-                        Int32.Parse(x.KeyChar.ToString()),
-                        Int32.Parse(y.KeyChar.ToString()),
+                        (int)Char.GetNumericValue(x.KeyChar),
+                        (int)Char.GetNumericValue(y.KeyChar),
                         playerToMove
                     );
 
@@ -74,9 +70,6 @@ namespace Othello.Game
                     Console.ReadKey(true);
                 }
             }
-            
-
-
         }
     }
 #endif

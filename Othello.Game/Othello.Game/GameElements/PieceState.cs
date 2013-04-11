@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Othello.Game.GameElements
 {
-    enum PieceState
+    public enum PieceState
     {
         Black = 2,
         White = 1,
