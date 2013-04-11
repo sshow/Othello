@@ -68,23 +68,26 @@ namespace Othello.Game.GameElements
             }
         }
 
-        public void PrintBoardState()
+        /// <summary>
+        /// Returns the current state of the board
+        /// </summary>
+        public override string ToString()
         {
-            Console.Clear();
+            string board = string.Empty;
 
             for (int y = 0; y < Height; y++)
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    Console.Write("{0}  ", (int)GetPiece(x, y).State);
+                    board += string.Format("{0}  ", (int)GetPiece(x, y).State);
                 }
 
-                Console.WriteLine();
-                Console.WriteLine();
+                board += "\r\n\r\n";
             }
+
+            return board;
         }
 
-        #region Helper Methods
         /// <summary>
         /// Determines if placing of the piece is a valid placement
         /// </summary>
@@ -94,121 +97,8 @@ namespace Othello.Game.GameElements
         }
 
         /// <summary>
-        /// Get the immediatly adjacent piece in specified direction
+        /// Returns a collection of the pieces that are to be turned if the supplied piece is placed
         /// </summary>
-        //public Piece GetAdjacentPiece(Piece piece, Direction direction)
-        //{
-        //    switch (direction)
-        //    {
-        //        case Direction.North:
-        //            if (piece.Y == 0)
-        //                return Piece.Empty;
-        //            else
-        //                return GetPiece(piece.X, piece.Y - 1);
-        //        case Direction.East:
-        //            if (piece.X == Width - 1)
-        //                return Piece.Empty;
-        //            else
-        //                return GetPiece(piece.X + 1, piece.Y);
-        //        case Direction.South:
-        //            if (piece.Y == Height - 1)
-        //                return Piece.Empty;
-        //            else
-        //                return GetPiece(piece.X, piece.Y + 1);
-        //        case Direction.West:
-        //            if (piece.X == 0)
-        //                return Piece.Empty;
-        //            else
-        //                return GetPiece(piece.X - 1, piece.Y);
-        //        default:
-        //            return Piece.Empty;
-        //    }
-        //}
-
-        public IEnumerable<Piece> GetPiecesBetweenX(Piece p1, Piece p2)
-        {
-            // Make sure they share axis
-            if (p1.Y != p2.Y)
-                return Enumerable.Empty<Piece>();
-
-            // Get first and last piece on line
-            var first = p1.X < p2.X ? p1 : p2;
-            var last = p1.X < p2.X ? p2 : p1;
-
-            return Pieces.Where(p =>
-                p.X > first.X &&
-                p.X < last.X &&
-                p.Y == p1.Y &&
-                p.State != PieceState.Open);
-        }
-
-        public bool IsConnectedX(Piece p1, Piece p2)
-        {
-            return GetPiecesBetweenX(p1, p2).Count() == p1.X - p2.X;
-        }
-
-        public IEnumerable<Piece> GetPiecesBetweenY(Piece p1, Piece p2)
-        {
-            // Make sure they share axis
-            if (p1.X != p2.X)
-                return Enumerable.Empty<Piece>();
-
-            // Get first and last piece on line
-            var first = p1.Y < p2.Y ? p1 : p2;
-            var last = p1.Y < p2.Y ? p2 : p1;
-
-            return Pieces.Where(p =>
-                p.Y > first.Y &&
-                p.Y < last.Y &&
-                p.X == p1.X &&
-                p.State != PieceState.Open);
-        }
-
-        public bool IsConnectedY(Piece p1, Piece p2)
-        {
-            return GetPiecesBetweenY(p1, p2).Count() == p1.Y - p2.Y;
-        }
-
-        /// <summary>
-        /// Returns all filled pieces in specified direction in relation to the speicified piece
-        /// </summary>
-        public IEnumerable<Piece> GetPiecesInDirection(Piece piece, Direction dir)
-        {
-            IEnumerable<Piece> pieces;
-            switch (dir)
-            {
-                case Direction.North:
-                    pieces = Pieces.Where(p =>
-                        p.X == piece.X &&
-                        p.Y > piece.Y
-                    );
-                    break;
-                case Direction.East:
-                    pieces = Pieces.Where(p =>
-                        p.X > piece.X &&
-                        p.Y == piece.Y
-                    );
-                    break;
-                case Direction.South:
-                    pieces = Pieces.Where(p =>
-                        p.X == piece.X &&
-                        p.Y < piece.Y
-                    );
-                    break;
-                case Direction.West:
-                    pieces = Pieces.Where(p =>
-                        p.X < piece.X &&
-                        p.Y == piece.Y
-                    );
-                    break;
-                default:
-                    return Enumerable.Empty<Piece>();
-            }
-
-            // Return only the fields which are not blank
-            return pieces.Where(p => p.State != PieceState.Open);
-        }
-
         public IEnumerable<Piece> GetValidConnectingPieces(Piece piece)
         {
             var connectingPieces = new List<Piece>();
@@ -252,6 +142,5 @@ namespace Othello.Game.GameElements
 
             return connectingPieces.AsEnumerable();
         }
-        #endregion
     }
 }
